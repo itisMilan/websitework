@@ -121,9 +121,81 @@ const DOCUMENTS = [
 function telHref(num){ return `tel:${num.replace(/\s+/g, "")}`; }
 
 const CALL_SVG = `<svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24 11.36 11.36 0 003.56.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.56 1 1 0 01-.25 1.02z"/></svg>`;
+const PIN_SVG = `<svg viewBox="0 0 24 24"><path fill="#EA4335" d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7z"/><circle cx="12" cy="9" r="2.5" fill="#fff"/></svg>`;
 
 function callBtn(name, num){
   return `<a class="call-btn" href="${telHref(num)}" title="Call ${name} — ${num}" aria-label="Call ${name}">${CALL_SVG}</a>`;
+}
+
+/* Verified Google Maps building pins (from SFI PU helpdesk).
+   Departments share buildings, so several map to one block link. */
+const BLOCK = {
+  humanities:     "https://maps.app.goo.gl/NRxASpsSgrPqQGoY9",
+  media:          "https://maps.app.goo.gl/DzLh8LQRfJ78RLQLA",
+  physics:        "https://maps.app.goo.gl/QMCCmH7pgvHwFutJ8",
+  chemistry:      "https://maps.app.goo.gl/GnwngGvKfZDNdxxr8",
+  geology:        "https://maps.app.goo.gl/i4SeigkTvF35NTLX7",
+  performingArts: "https://maps.app.goo.gl/h8vnyDkGRqs6shpP6",
+  management:     "https://maps.app.goo.gl/EF8hmX3GABKi7ueC6",
+  foodScience:    "https://maps.app.goo.gl/T5qTWPxyN1CMuF5L8",
+  biochem:        "https://maps.app.goo.gl/B6VEzvutH4HydfaP8",
+  bioinformatics: "https://maps.app.goo.gl/J8HGQ8fg42Gv8zQB8",
+  biotech:        "https://maps.app.goo.gl/8agAZQTMcRw4GTMt5",
+  microbiology:   "https://maps.app.goo.gl/GYbDhT1oa3vtHiTd9"
+};
+const DEPT_MAP = {
+  "South Asian Studies": BLOCK.humanities,
+  "Anthropology": BLOCK.humanities,
+  "Sociology": BLOCK.humanities,
+  "History": BLOCK.humanities,
+  "Political Science & IR": BLOCK.humanities,
+  "Women's Studies": BLOCK.humanities,
+  "Human Rights & Inclusive Policy": BLOCK.humanities,
+  "English": BLOCK.humanities,
+  "French": BLOCK.humanities,
+  "Hindi": BLOCK.humanities,
+  "Sanskrit": BLOCK.humanities,
+  "Philosophy": BLOCK.humanities,
+  "M.S.W. (Social Work)": BLOCK.humanities,
+  "MPEd": BLOCK.humanities,
+  "Mass Communication": BLOCK.media,
+  "Electronic Media": BLOCK.media,
+  "MVA Painting": BLOCK.media,
+  "M.P.A. Drama & Theatre": BLOCK.performingArts,
+  "Physics": BLOCK.physics,
+  "Chemistry": BLOCK.chemistry,
+  "Applied Geology": BLOCK.geology,
+  "Geophysics": BLOCK.geology,
+  "Bioinformatics": BLOCK.bioinformatics,
+  "Microbiology": BLOCK.microbiology,
+  "Biotechnology": BLOCK.biotech,
+  "Food Science & Technology": BLOCK.foodScience,
+  "Biochemistry": BLOCK.biochem,
+  "Economics": BLOCK.management,
+  "Business Administration": BLOCK.management,
+  "Data Analytics": BLOCK.management,
+  "Tourism & Travel Management": BLOCK.management,
+  "Banking Technology": BLOCK.management,
+  "Financial Technology": BLOCK.management,
+  "International Business": BLOCK.management,
+  "Logistics & Supply Chain": BLOCK.management,
+  "Business Finance": BLOCK.management,
+  "Accounting and Taxation": BLOCK.management
+};
+
+function searchUrl(deptName){
+  const q = encodeURIComponent(`${deptName}, Pondicherry University`);
+  return `https://www.google.com/maps/search/?api=1&query=${q}`;
+}
+function mapBtn(deptName){
+  const pin = DEPT_MAP[deptName];
+  const href = pin || searchUrl(deptName);
+  const approx = pin ? "" : " map-btn--approx";
+  const title = pin
+    ? `Locate ${deptName} on Google Maps`
+    : `Approximate — search ${deptName} on Google Maps`;
+  return `<a class="map-btn${approx}" href="${href}" target="_blank" rel="noopener"
+     title="${title}" aria-label="${title}">${PIN_SVG}</a>`;
 }
 
 /* ---------- copy-to-clipboard (shared by core cards, chips, dept lines) ---------- */
@@ -214,7 +286,10 @@ function renderDirectory(){
       html += `
         <article class="dept-card">
           <span class="school-label">${school.title}</span>
-          <h4>${dept.name}</h4>
+          <div class="dept-head">
+            <h4>${dept.name}</h4>
+            ${mapBtn(dept.name)}
+          </div>
           ${dept.contacts.map(([name, num]) => `
             <span class="contact-line">
               <span class="contact-main">
