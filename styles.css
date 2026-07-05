@@ -495,6 +495,7 @@ h1,h2,h3{ margin:0; font-family: var(--display); font-weight:400; }
   .topnav a{ padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,.1); }
   .menu-btn{ display:flex; }
   .directory-controls{ top: 60px; }
+  .directory-results{ max-height:70vh; overflow-y:auto; }
   .steps{ grid-template-columns: 1fr 1fr; }
   .section{ padding: 56px 20px; }
   .hero{ padding: 56px 20px 48px; }
