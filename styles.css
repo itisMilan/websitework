@@ -184,6 +184,11 @@ h1,h2,h3{ margin:0; font-family: var(--display); font-weight:400; }
 }
 .section--flush{ padding-top: 56px; }
 
+/* "Who To Call" lost its subgroups to the standalone Hostels section,
+   leaving just two cards — trim the padding so it doesn't read as a gap. */
+#contacts{ padding-bottom: 32px; }
+#contacts .core-contacts{ margin-bottom: 0; }
+
 .section-title{
   display:flex; align-items:center; gap:16px;
   font-size: clamp(1.8rem, 4vw, 2.6rem);
@@ -219,8 +224,8 @@ h1,h2,h3{ margin:0; font-family: var(--display); font-weight:400; }
 /* ============ CORE CONTACTS ============ */
 .core-contacts{
   display:grid; grid-template-columns: repeat(2,1fr); gap:20px;
-  margin-bottom: 44px;
 }
+.core-contacts:not(:last-child){ margin-bottom: 44px; }
 .core-card{
   position:relative;
   display:flex; flex-direction:column; gap:6px;
