@@ -88,7 +88,10 @@ h1,h2,h3{ margin:0; font-family: var(--display); font-weight:400; }
   display:none; flex-direction:column; gap:5px;
   width:32px; height:24px; background:none; border:none; cursor:pointer; padding:0;
 }
-.menu-btn span{ display:block; height:3px; background: var(--paper); border-radius:2px; }
+.menu-btn span{
+  display:block; flex:0 0 3px; width:100%;
+  background: var(--paper); border-radius:2px;
+}
 
 /* ============ HERO ============ */
 .hero{
@@ -360,8 +363,7 @@ h1,h2,h3{ margin:0; font-family: var(--display); font-weight:400; }
 }
 .map-btn svg{ width:17px; height:17px; }
 .map-btn:hover{ transform: translateY(-1px); box-shadow: 2px 2px 0 var(--ink); }
-.map-btn--approx{ opacity:.55; border-color: var(--line); }
-.map-btn--approx:hover{ opacity:1; }
+.map-btn--approx{ opacity:1; border-color: var(--ink); }
 .contact-line{
   display:flex; align-items:center; gap:8px;
   padding: 6px 0; color:var(--ink);

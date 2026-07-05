@@ -121,7 +121,7 @@ const DOCUMENTS = [
 function telHref(num){ return `tel:${num.replace(/\s+/g, "")}`; }
 
 const CALL_SVG = `<svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24 11.36 11.36 0 003.56.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.56 1 1 0 01-.25 1.02z"/></svg>`;
-const PIN_SVG = `<svg viewBox="0 0 24 24"><path fill="#EA4335" d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7z"/><circle cx="12" cy="9" r="2.5" fill="#fff"/></svg>`;
+const PIN_SVG = `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#34A853" d="M12 1.8A7.2 7.2 0 0 0 4.8 9c0 5.4 7.2 13.2 7.2 13.2l2.3-3.1-3.7-4.5A5.9 5.9 0 0 1 6.2 9c0-2.9 2.2-5.4 5.1-5.7L12 1.8z"/><path fill="#4285F4" d="M12 1.8c2.1 0 4 1 5.3 2.5l-4 3.3A2.2 2.2 0 0 0 12 6.8a2.2 2.2 0 0 0-1.4.5L6.7 4A7.2 7.2 0 0 1 12 1.8z"/><path fill="#FBBC04" d="M17.3 4.3A7.2 7.2 0 0 1 19.2 9c0 2.3-1.3 5-2.8 7.3l-4-4.7A2.2 2.2 0 0 0 14.2 9c0-.5-.2-1-.5-1.4l3.6-3.3z"/><path fill="#EA4335" d="m12 22.2 4.4-5.9-4-4.7a2.2 2.2 0 0 1-1.8 0l-2.2 3.6L12 22.2z"/></svg>`;
 
 function callBtn(name, num){
   return `<a class="call-btn" href="${telHref(num)}" title="Call ${name} — ${num}" aria-label="Call ${name}">${CALL_SVG}</a>`;
