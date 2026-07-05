@@ -52,7 +52,7 @@
     We wish you an academically productive and socially inclusive stay on campus.
   </p>
   <p class="hero-sub">
-    For any assistance, including your stay on campus — feel free to reach out.
+    For any assistance, including your stay on campus, feel free to reach out.
     We're happy to help you by voicing any opinion, comment or query.
   </p>
 
@@ -110,12 +110,13 @@
 
   <div class="directory-results" id="directoryResults"></div>
   <p class="no-results" id="noResults" hidden>No matches. Try “Economics”, “MBA” or a coordinator's name.</p>
+  <a class="skip-directory" href="#map" id="skipDirectory">Skip directory ↓</a>
 </section>
 
 <!-- ============ MAP ============ -->
 <section class="section" id="map">
   <h2 class="section-title"><span class="tag">03</span> Campus Route Map</h2>
-  <p class="section-lede">Hostels, mess halls, departments and both gates — tap to zoom.</p>
+  <p class="section-lede">Hostels, mess halls, departments and both gates. Tap to zoom.</p>
 
   <button class="map-frame" id="mapOpenBtn">
     <img src="assets/campus-map.png" alt="Pondicherry University campus route map showing hostels, departments, mess halls and gates" loading="lazy">
@@ -125,40 +126,14 @@
 
 <!-- ============ PROCEDURE ============ -->
 <section class="section" id="procedure">
-  <h2 class="section-title"><span class="tag">04</span> Admission Procedure</h2>
+  <div class="section-head-row">
+    <h2 class="section-title"><span class="tag">04</span> Admission Procedure</h2>
+    <span class="progress-badge" id="stepBadge">0 / 6 done</span>
+  </div>
+  <p class="section-lede">Tap each step as you finish. Your progress is saved on this device.</p>
 
-  <ol class="steps">
-    <li class="step">
-      <span class="step-icon">🏛</span>
-      <span class="step-num">1</span>
-      <span class="step-label">Visit Department</span>
-    </li>
-    <li class="step">
-      <span class="step-icon">🪪</span>
-      <span class="step-num">2</span>
-      <span class="step-label">Complete Physical Verification</span>
-    </li>
-    <li class="step">
-      <span class="step-icon">📝</span>
-      <span class="step-num">3</span>
-      <span class="step-label">Collect &amp; Fill Hostel Forms</span>
-    </li>
-    <li class="step">
-      <span class="step-icon">🏢</span>
-      <span class="step-num">4</span>
-      <span class="step-label">Go To Hostel Office</span>
-    </li>
-    <li class="step">
-      <span class="step-icon">₹</span>
-      <span class="step-num">5</span>
-      <span class="step-label">Pay Hostel Fee</span>
-    </li>
-    <li class="step">
-      <span class="step-icon">🧾</span>
-      <span class="step-num">6</span>
-      <span class="step-label">Collect Allotment Slip</span>
-    </li>
-  </ol>
+  <ol class="timeline" id="timeline"></ol>
+  <button class="btn btn--ghost btn--small" id="resetSteps">Reset progress</button>
 </section>
 
 <!-- ============ DOCUMENTS ============ -->
@@ -167,7 +142,7 @@
     <h2 class="section-title"><span class="tag">05</span> Documents Checklist</h2>
     <span class="progress-badge" id="progressBadge">0 / 12 ready</span>
   </div>
-  <p class="section-lede">Originals required for admission. Tick them off as you pack — saved on this device.</p>
+  <p class="section-lede">Originals required for admission. Tick them off as you pack, saved on this device.</p>
 
   <ul class="checklist" id="checklist"></ul>
   <button class="btn btn--ghost btn--small" id="resetChecklist">Reset checklist</button>

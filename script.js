@@ -118,6 +118,15 @@ const DOCUMENTS = [
   "Wards/Dependents of Defence Personnel Certificate (if applicable)"
 ];
 
+const STEPS = [
+  ["Visit Department", "Report to your PG department office to begin admission."],
+  ["Physical Verification", "Originals checked and your admission form attested."],
+  ["Collect & Fill Hostel Forms", "Pick up the hostel forms and complete them on the spot."],
+  ["Go To Hostel Office", "Submit the filled forms at the hostel office."],
+  ["Pay Hostel Fee", "Pay the hostel fee and keep the payment receipt."],
+  ["Collect Allotment Slip", "Receive your room allotment slip. Admission done."]
+];
+
 function telHref(num){ return `tel:${num.replace(/\s+/g, "")}`; }
 
 const CALL_SVG = `<svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24 11.36 11.36 0 003.56.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.56 1 1 0 01-.25 1.02z"/></svg>`;
@@ -141,7 +150,11 @@ const BLOCK = {
   biochem:        "https://maps.app.goo.gl/B6VEzvutH4HydfaP8",
   bioinformatics: "https://maps.app.goo.gl/J8HGQ8fg42Gv8zQB8",
   biotech:        "https://maps.app.goo.gl/8agAZQTMcRw4GTMt5",
-  microbiology:   "https://maps.app.goo.gl/GYbDhT1oa3vtHiTd9"
+  microbiology:   "https://maps.app.goo.gl/GYbDhT1oa3vtHiTd9",
+  csMca:          "https://maps.app.goo.gl/7hYwyVTn395KcPjF6",
+  llm:            "https://maps.app.goo.gl/BNZ18qyaXw4Ja93Q9",
+  statsFinance:   "https://maps.app.goo.gl/LPQS4zqNTtqsnjYi8",
+  maths:          "https://maps.app.goo.gl/SrkpnSQHh1U8ih1W9"
 };
 const DEPT_MAP = {
   "South Asian Studies": BLOCK.humanities,
@@ -180,7 +193,13 @@ const DEPT_MAP = {
   "International Business": BLOCK.management,
   "Logistics & Supply Chain": BLOCK.management,
   "Business Finance": BLOCK.management,
-  "Accounting and Taxation": BLOCK.management
+  "Accounting and Taxation": BLOCK.management,
+  "Computer Science (Data Analytics)": BLOCK.csMca,
+  "MCA": BLOCK.csMca,
+  "LLM": BLOCK.llm,
+  "Statistics": BLOCK.statsFinance,
+  "Quantitative Finance": BLOCK.statsFinance,
+  "Mathematics": BLOCK.maths
 };
 
 function searchUrl(deptName){
@@ -369,6 +388,59 @@ document.getElementById("resetChecklist").addEventListener("click", () => {
   renderChecklist();
 });
 
+/* ---------- procedure timeline with localStorage ---------- */
+const timelineEl = document.getElementById("timeline");
+const stepBadge = document.getElementById("stepBadge");
+const STEP_KEY = "sfipu-steps-2025";
+
+function loadSteps(){
+  try { return JSON.parse(localStorage.getItem(STEP_KEY)) || {}; }
+  catch { return {}; }
+}
+function saveSteps(state){
+  localStorage.setItem(STEP_KEY, JSON.stringify(state));
+}
+function updateStepBadge(state){
+  const done = STEPS.reduce((n, _, i) => n + (state[i] ? 1 : 0), 0);
+  stepBadge.textContent = `${done} / ${STEPS.length} done`;
+  stepBadge.classList.toggle("progress-badge--full", done === STEPS.length);
+}
+
+function renderTimeline(){
+  const state = loadSteps();
+  timelineEl.innerHTML = STEPS.map(([title, desc], i) => `
+    <li class="tl-step ${state[i] ? "done" : ""}" data-i="${i}" role="button" tabindex="0" aria-pressed="${state[i] ? "true" : "false"}">
+      <span class="tl-node"><span class="tl-num">${i + 1}</span><span class="tl-check">✓</span></span>
+      <span class="tl-body">
+        <span class="tl-title">${title}</span>
+        <span class="tl-desc">${desc}</span>
+      </span>
+    </li>
+  `).join("");
+  updateStepBadge(state);
+
+  timelineEl.querySelectorAll(".tl-step").forEach(li => {
+    const toggle = () => {
+      const i = li.dataset.i;
+      const state = loadSteps();
+      state[i] = !state[i];
+      saveSteps(state);
+      li.classList.toggle("done", !!state[i]);
+      li.setAttribute("aria-pressed", state[i] ? "true" : "false");
+      updateStepBadge(state);
+    };
+    li.addEventListener("click", toggle);
+    li.addEventListener("keydown", e => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); }
+    });
+  });
+}
+
+document.getElementById("resetSteps").addEventListener("click", () => {
+  localStorage.removeItem(STEP_KEY);
+  renderTimeline();
+});
+
 /* ---------- map lightbox ---------- */
 const lightbox = document.getElementById("lightbox");
 document.getElementById("mapOpenBtn").addEventListener("click", () => lightbox.classList.add("open"));
@@ -388,9 +460,31 @@ topnav.querySelectorAll("a").forEach(a => a.addEventListener("click", () => {
   menuBtn.setAttribute("aria-expanded", "false");
 }));
 
+/* ---------- floating "skip directory" (mobile) ---------- */
+const skipBtn = document.getElementById("skipDirectory");
+const directorySection = document.getElementById("directory");
+
+function updateSkipBtn(){
+  const r = directorySection.getBoundingClientRect();
+  const vh = window.innerHeight;
+  // show while a meaningful slice of the directory is on screen
+  const inView = r.top < vh * 0.75 && r.bottom > vh * 0.35;
+  skipBtn.classList.toggle("visible", inView);
+}
+window.addEventListener("scroll", updateSkipBtn, { passive: true });
+window.addEventListener("resize", updateSkipBtn);
+updateSkipBtn();
+
+skipBtn.addEventListener("click", e => {
+  e.preventDefault();
+  skipBtn.classList.remove("visible");
+  document.getElementById("map").scrollIntoView({ behavior: "smooth", block: "start" });
+});
+
 /* ---------- init ---------- */
 buildFilterChips();
 renderChipGroup("hostelIncharges", HOSTEL_INCHARGES);
 renderChipGroup("dayScholar", DAY_SCHOLAR);
 renderDirectory();
 renderChecklist();
+renderTimeline();
