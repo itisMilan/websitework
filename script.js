@@ -92,15 +92,29 @@ const SCHOOLS = [
   }
 ];
 
-const HOSTEL_INCHARGES = [
-  ["Rameez", "9061711797"], ["Arundhathi", "9778191197"],
-  ["Haizam", "9778210231"], ["Anshiya", "9946061973"],
-  ["Achuthan", "9994119900"], ["Gopika", "7356639742"],
-  ["Stalin", "8184820292"], ["Parvanendu", "8078758314"]
+const BOYS_HOSTEL_INCHARGES = [
+  ["Rameez", "9061711797"], ["Haizam", "9778210231"],
+  ["Achuthan", "9994119900"], ["Stalin", "8184820292"]
+];
+
+const GIRLS_HOSTEL_INCHARGES = [
+  ["Arundhathi", "9778191197"], ["Anshiya", "9946061973"],
+  ["Gopika", "7356639742"], ["Parvanendu", "8078758314"]
 ];
 
 const DAY_SCHOLAR = [
   ["Achuthan", "9994119900"], ["Anbuvanan", "6383067975"]
+];
+
+const CANTEENS = [
+  ["Canteen (Near Management Block)", "https://maps.app.goo.gl/LtbLkKzs9RWALU73A?g_st=ic"],
+  ["Canteen (Near Girls Hostels)", "https://maps.app.goo.gl/ZpCkkyuuNHzx4saj6?g_st=ic"],
+  ["Canteen (Near Boys Hostels)", "https://maps.app.goo.gl/A7d9aUW7rApXjy2z8?g_st=ic"]
+];
+
+const PRINT_SHOPS = [
+  ["Printing Shop (Ponlait)", "https://maps.app.goo.gl/2tm8Y8KZe4DFDtKD9?g_st=ic"],
+  ["Printing Shop (Near Science Block)", "https://maps.app.goo.gl/x9qMdCy7LgVHH3cc9"]
 ];
 
 const DOCUMENTS = [
@@ -263,6 +277,17 @@ function renderChipGroup(containerId, list){
     </span>
   `).join("");
   wireCopyButtons(el);
+}
+
+/* ---------- render: canteens + printing (place chips, link straight to Maps) ---------- */
+function renderPlaceGroup(containerId, list){
+  const el = document.getElementById(containerId);
+  el.innerHTML = list.map(([name, url]) => `
+    <a class="chip chip--place" href="${url}" target="_blank" rel="noopener" title="Locate ${name} on Google Maps">
+      <span class="chip-name">${name}</span>
+      <span class="place-pin">${PIN_SVG}</span>
+    </a>
+  `).join("");
 }
 
 /* ---------- render: directory ---------- */
@@ -484,8 +509,11 @@ skipBtn.addEventListener("click", e => {
 
 /* ---------- init ---------- */
 buildFilterChips();
-renderChipGroup("hostelIncharges", HOSTEL_INCHARGES);
+renderChipGroup("girlsHostelIncharges", GIRLS_HOSTEL_INCHARGES);
+renderChipGroup("boysHostelIncharges", BOYS_HOSTEL_INCHARGES);
 renderChipGroup("dayScholar", DAY_SCHOLAR);
+renderPlaceGroup("canteens", CANTEENS);
+renderPlaceGroup("printShops", PRINT_SHOPS);
 renderDirectory();
 renderChecklist();
 renderTimeline();

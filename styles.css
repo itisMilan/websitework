@@ -315,6 +315,16 @@ h1,h2,h3{ margin:0; font-family: var(--display); font-weight:400; }
 .chip:hover{ border-color: var(--red); background: #fff; }
 .chip-name{ font-weight:600; }
 
+.chip--place{ text-decoration:none; cursor:pointer; }
+.place-pin{
+  flex:none; display:flex; align-items:center; justify-content:center;
+  width:26px; height:26px; border-radius:50%;
+  background: var(--paper); border:1.5px solid var(--ink);
+  transition: border-color .15s ease;
+}
+.place-pin svg{ width:15px; height:15px; }
+.chip--place:hover .place-pin{ border-color: var(--red); }
+
 /* ============ DIRECTORY ============ */
 .directory-controls{
   display:flex; flex-direction:column; gap:18px;
