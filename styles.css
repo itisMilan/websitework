@@ -176,6 +176,9 @@ h1,h2,h3{ margin:0; font-family: var(--display); font-weight:400; }
 .section .btn--ghost:hover{ background: rgba(32,26,19,.06); }
 .btn--small{ padding: 9px 18px; font-size:.78rem; margin-top: 22px; }
 
+.btn-row{ display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin-top: 22px; }
+.btn-row .btn--small{ margin-top: 0; }
+
 /* ============ SECTIONS ============ */
 .section{
   padding: 72px 28px;
