@@ -139,6 +139,7 @@ function callBtn(name, num){
 /* Verified Google Maps building pins (from SFI PU helpdesk).
    Departments share buildings, so several map to one block link. */
 const BLOCK = {
+  southAsian:     "https://maps.app.goo.gl/xaZ7jgSYkY2DWd479",
   humanities:     "https://maps.app.goo.gl/NRxASpsSgrPqQGoY9",
   media:          "https://maps.app.goo.gl/DzLh8LQRfJ78RLQLA",
   physics:        "https://maps.app.goo.gl/QMCCmH7pgvHwFutJ8",
@@ -157,7 +158,7 @@ const BLOCK = {
   maths:          "https://maps.app.goo.gl/SrkpnSQHh1U8ih1W9"
 };
 const DEPT_MAP = {
-  "South Asian Studies": BLOCK.humanities,
+  "South Asian Studies": BLOCK.southAsian,
   "Anthropology": BLOCK.humanities,
   "Sociology": BLOCK.humanities,
   "History": BLOCK.humanities,
